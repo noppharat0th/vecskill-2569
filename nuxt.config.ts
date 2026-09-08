@@ -4,5 +4,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   modules: ['@nuxt/ui'],
-  css: ['~/assets/global.css']
+  css: ['~/assets/global.css'],
+
+  colorMode: {
+    preference: 'light',
+    fallback: 'light',
+    classSuffix: ''
+  }
 })
