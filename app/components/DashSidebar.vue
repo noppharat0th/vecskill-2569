@@ -3,15 +3,15 @@ const route = useRoute()
 
 const mainMenu = [
     { label: 'Dashboard', icon: 'i-lucide-layout-dashboard', to: '/admin' },
-    { label: 'Transaction', icon: 'i-lucide-arrow-left-right', to: '/admin/transaction' },
-    { label: 'Analytics', icon: 'i-lucide-bar-chart-2', to: '/admin/analytics' },
-    { label: 'Budgeting', icon: 'i-lucide-wallet', to: '/admin/budgeting' },
+    { label: 'Transaction', icon: 'i-lucide-arrow-left-right', to: '' },
+    { label: 'Analytics', icon: 'i-lucide-bar-chart-2', to: '' },
+    { label: 'Budgeting', icon: 'i-lucide-wallet', to: '' },
 ]
 
 const otherMenu = [
-    { label: 'Settings', icon: 'i-lucide-settings', to: '/admin/settings' },
-    { label: 'Help & FAQ', icon: 'i-lucide-circle-help', to: '/admin/help' },
-    { label: 'Sign Out', icon: 'i-lucide-log-out', to: '/logout' },
+    { label: 'Settings', icon: 'i-lucide-settings', to: '' },
+    { label: 'Help & FAQ', icon: 'i-lucide-circle-help', to: '' },
+    { label: 'Sign Out', icon: 'i-lucide-log-out', to: '' },
 ]
 
 

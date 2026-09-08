@@ -12,4 +12,4 @@
         <template #right>
         </template>
     </UDashboardNavbar>
-</template>
+</template> 

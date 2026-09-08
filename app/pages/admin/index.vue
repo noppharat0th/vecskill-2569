@@ -1,7 +1,12 @@
 <script lang="ts" setup>
+import { useApi } from '~/composables/useApi';
+
 definePageMeta({
     layout: "dashboard"
 })
+
+const users = await useApi().get('/users')
+console.log(users)
 </script>
 
 <template>
