@@ -1,17 +1,31 @@
 <script setup lang="ts">
 const route = useRoute()
 
-const mainMenu = [
-    { label: 'Dashboard', icon: 'i-lucide-layout-dashboard', to: '/admin' },
-    { label: 'Transaction', icon: 'i-lucide-arrow-left-right', to: '' },
-    { label: 'Analytics', icon: 'i-lucide-bar-chart-2', to: '' },
-    { label: 'Budgeting', icon: 'i-lucide-wallet', to: '' },
-]
-
-const otherMenu = [
-    { label: 'Settings', icon: 'i-lucide-settings', to: '' },
-    { label: 'Help & FAQ', icon: 'i-lucide-circle-help', to: '' },
-    { label: 'Sign Out', icon: 'i-lucide-log-out', to: '' },
+const menus = [
+    {
+        category: 'Overview',
+        items: [
+            { label: 'Dashboard', icon: 'i-lucide-layout-dashboard', to: '/admin' },
+            { label: 'Result', icon: 'i-lucide-file-check', to: '' },
+            { label: 'Track Status', icon: 'i-lucide-activity', to: '' },
+            { label: 'Report', icon: 'i-lucide-file-text', to: '' },
+        ]
+    },
+    {
+        category: 'Assessment',
+        items: [
+            { label: 'Add Indicator', icon: 'i-lucide-target', to: '' },
+            { label: 'Assignments', icon: 'i-lucide-clipboard-list', to: '' },
+        ]
+    },
+    {
+        category: 'Manager',
+        items: [
+            { label: 'Manager Evaluation', icon: 'i-lucide-clipboard-check', to: '' },
+            { label: 'Manager Evaluator', icon: 'i-lucide-users', to: '' },
+            { label: 'Manager Evaluatee', icon: 'i-lucide-user-check', to: '' },
+        ]
+    },
 ]
 
 
@@ -30,31 +44,14 @@ const isActive = (to: string) => route.path === to
 
         <!-- Nav -->
         <nav class="flex-1 overflow-y-auto flex flex-col gap-5 mt-2">
-            <!-- Main Menu -->
-            <div>
-                <p class="text-[10px] font-semibold tracking-widest text-gray-400 px-2 mb-1.5">MAIN MENU</p>
+            <!-- Menu Groups -->
+            <div v-for="group in menus" :key="group.category">
+                <p class="text-[10px] font-semibold tracking-widest text-gray-400 px-2 mb-1.5">{{ group.category }}</p>
                 <ul class="flex flex-col gap-0.5">
-                    <li v-for="item in mainMenu" :key="item.to">
+                    <li v-for="item in group.items" :key="item.label">
                         <NuxtLink :to="item.to"
                             class="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-sm font-medium transition-all duration-150"
-                            :class="isActive(item.to)
-                                ? 'bg-orange-50 text-orange-600 font-semibold'
-                                : 'text-gray-500 hover:bg-gray-50 hover:text-orange-500'">
-                            <UIcon :name="item.icon" class="size-4 shrink-0" />
-                            {{ item.label }}
-                        </NuxtLink>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Other Menu -->
-            <div>
-                <p class="text-[10px] font-semibold tracking-widest text-gray-400 px-2 mb-1.5">OTHER</p>
-                <ul class="flex flex-col gap-0.5">
-                    <li v-for="item in otherMenu" :key="item.to">
-                        <NuxtLink :to="item.to"
-                            class="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-sm font-medium transition-all duration-150"
-                            :class="isActive(item.to)
+                            :class="isActive(item.to) && item.to !== ''
                                 ? 'bg-orange-50 text-orange-600 font-semibold'
                                 : 'text-gray-500 hover:bg-gray-50 hover:text-orange-500'">
                             <UIcon :name="item.icon" class="size-4 shrink-0" />
