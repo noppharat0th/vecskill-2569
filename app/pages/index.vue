@@ -13,11 +13,12 @@ const showPassword = ref(false)
 
                     <!-- mesh gradient -->
                     <div class="absolute -inset-16 blur-3xl" style="background:
-              radial-gradient(circle at 15% 25%, #1e1b8a 0%, transparent 45%),
-              radial-gradient(circle at 78% 12%, #7c3aed 0%, transparent 50%),
-              radial-gradient(circle at 30% 75%, #3730a3 0%, transparent 55%),
-              radial-gradient(circle at 88% 68%, #c7d2fe 0%, transparent 45%),
-              linear-gradient(160deg, #1e1b4b 0%, #4338ca 55%, #818cf8 100%);" />
+                        radial-gradient(circle at 15% 25%, #7c2d12 0%, transparent 45%),
+                        radial-gradient(circle at 78% 12%, #ea580c 0%, transparent 50%),
+                        radial-gradient(circle at 30% 75%, #9a3412 0%, transparent 55%),
+                        radial-gradient(circle at 88% 68%, #fed7aa 0%, transparent 45%),
+                        linear-gradient(160deg, #431407 0%, #c2410c 55%, #fb923c 100%);"
+                    />
 
                     <div class="relative z-10 flex h-full flex-col justify-between p-8">
                         <UIcon name="i-lucide-asterisk" class="size-8 text-white" />
@@ -39,8 +40,7 @@ const showPassword = ref(false)
                         Create an account
                     </h1>
                     <p class="mt-2 text-sm text-(--ui-text-muted)">
-                        Access your tasks, notes, and projects anytime, anywhere — and keep everything flowing in one
-                        place.
+                        Access your tasks, notes, and projects anytime, anywhere — and keep everything flowing in one place.
                     </p>
 
                     <form class="mt-6 space-y-4" @submit.prevent>

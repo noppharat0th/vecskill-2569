@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <UDashboardNavbar title="Hello World">
+    <UDashboardNavbar title="Hello World" class="bg-white">
         <template #leading>
 
         </template>
