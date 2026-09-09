@@ -24,9 +24,7 @@ const items = [
         <div class="min-h-screen flex items-center justify-center p-6 bg-gray-100">
             <div class="grid w-full max-w-4xl grid-cols-1 gap-3 rounded-[28px] bg-white p-3 shadow-sm md:grid-cols-2">
 
-                <div class="relative hidden min-h-[520px] overflow-hidden rounded-3xl md:block">
-
-                    <!-- mesh gradient -->
+                <div class="relative hidden min-h-[520px] overflow-hidden rounded-3xl md:block" <!-- mesh gradient -->
                     <div class="absolute -inset-16 blur-3xl"
                         :style="{ background: 'radial-gradient(circle at 15% 25%, #7c2d12 0%, transparent 45%), radial-gradient(circle at 78% 12%, #ea580c 0%, transparent 50%), radial-gradient(circle at 30% 75%, #9a3412 0%, transparent 55%), radial-gradient(circle at 88% 68%, #fed7aa 0%, transparent 45%), linear-gradient(160deg, #431407 0%, #c2410c 55%, #fb923c 100%)' }" />
 
@@ -82,8 +80,6 @@ const items = [
 
                         <template #sign-up>
                             <div class="pt-4">
-
-
                                 <form class="mt- space-y-4" @submit.prevent>
                                     <UFormField label="Your email">
                                         <UInput v-model="email" type="email" placeholder="you@example.com" size="lg"
