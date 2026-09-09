@@ -1,20 +1,21 @@
-import { pool } from '~~/server/utils/db'
-import bcrypt from 'bcrypt'
+import { query } from '~~/server/utils/db'
 import jwt from 'jsonwebtoken'
-import { UserRow } from '~~/server/types/db'
+import type { UserRow } from '~~/server/types/db'
 
 export default defineEventHandler(async (event) => {
   const { username, password } = await readBody(event)
 
-  // query
-  const [rows] = await pool.query<UserRow[]>('SELECT * FROM users WHERE username = ?', [username])
+  if (!username || !password) {
+    throw createError({ statusCode: 400, message: 'Please complete all information' })
+  }
+
+  const rows = await query<UserRow[]>('SELECT * FROM users WHERE username = ?', [username])
   const user = rows[0]
 
-  if (!user || !(await bcrypt.compare(password, user.password))) {
+  if (!user || password !== user.password) {
     throw createError({ statusCode: 401, message: 'Invalid credentials' })
   }
 
-  // setup token cookie
   const payload = { id: user.id, username: user.username, role: user.role }
   const token = jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: '7d' })
 
@@ -26,5 +27,5 @@ export default defineEventHandler(async (event) => {
     path: '/',
   })
 
-  return { success: true, msg: 'เข้าสู่ระบบสำเร็จ', role: user.role }
+  return { success: true, msg: 'SignIn Success!', role: user.role }
 })

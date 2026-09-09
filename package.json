@@ -10,7 +10,6 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "bcrypt": "^6.0.0",
     "jsonwebtoken": "^9.0.3",
     "mysql2": "^3.24.3",
     "nuxt": "^4.5.2",
