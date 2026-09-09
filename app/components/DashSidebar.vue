@@ -37,7 +37,11 @@ const isActive = (to: string) => route.path === to
 
         <!-- Logo -->
         <div class="flex items-center gap-2.5 px-2 pb-4 mb-1 border-b border-gray-100">
-            <span class="text-base font-bold text-orange-950 tracking-tight">NAVAMIN</span>
+            <div>
+                <span class="text-3xl font-bold text-orange-950 tracking-tight">NV<span
+                        class="text-orange-500">MN</span></span>
+                <p class="text-xs text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+            </div>
             <UButton icon="i-lucide-panel-left-close" color="neutral" variant="ghost" size="xs"
                 class="ml-auto text-gray-400" />
         </div>
@@ -46,11 +50,11 @@ const isActive = (to: string) => route.path === to
         <nav class="flex-1 overflow-y-auto flex flex-col gap-5 mt-2">
             <!-- Menu Groups -->
             <div v-for="group in menus" :key="group.category">
-                <p class="text-[10px] font-semibold tracking-widest text-gray-400 px-2 mb-1.5">{{ group.category }}</p>
+                <p class="text-[10px]  tracking-widest text-gray-400 px-2 mb-1.5">{{ group.category }}</p>
                 <ul class="flex flex-col gap-0.5">
                     <li v-for="item in group.items" :key="item.label">
                         <NuxtLink :to="item.to"
-                            class="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-sm font-medium transition-all duration-150"
+                            class="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-sm transition-all duration-150"
                             :class="isActive(item.to) && item.to !== ''
                                 ? 'bg-orange-50 text-orange-600 font-semibold'
                                 : 'text-gray-500 hover:bg-gray-50 hover:text-orange-500'">
