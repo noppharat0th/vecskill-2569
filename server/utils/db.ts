@@ -1,4 +1,5 @@
 import mysql, { RowDataPacket } from 'mysql2/promise'
+import { throwError } from './functions'
 
 export const pool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -9,7 +10,7 @@ export const pool = mysql.createPool({
   connectionLimit: 10,
 })
 
-
+// query Database function
 export async function query<T extends RowDataPacket[]>(
   sql: string,
   params?: any[]
@@ -19,6 +20,6 @@ export async function query<T extends RowDataPacket[]>(
     return rows
   } catch (e) {
     console.error('DB query error:', e)
-    throw createError({ statusCode: 500, message: 'ผิดที่ไว้ใจนะ 500' })
+    throwError(500, 'ผิดที่ไว้ใจนะ 500')
   }
 }

@@ -1,13 +1,12 @@
 import { query } from '~~/server/utils/db'
 import jwt from 'jsonwebtoken'
 import type { UserRow } from '~~/server/types/db'
-import { throwError } from '~~/server/utils/functions'
+import { reqFields, throwError } from '~~/server/utils/functions'
 
 export default defineEventHandler(async (e) => {
   const { username, password } = await readBody(e)
-
-  if (!username || !password) throwError(400, 'Please complete all information')
-
+  reqFields([username, password])
+  
   // query
   const rows = await query<UserRow[]>('SELECT * FROM users WHERE username = ?', [username])
   const user = rows[0]
