@@ -6,3 +6,10 @@ export interface User {
   username: string
   role: 'admin' | 'evaluator' | 'evaluatee'
 }
+
+// auth
+export interface AuthPayload {
+  id: number
+  username: string
+  role: 'admin' | 'evaluator' | 'evaluatee'
+}
