@@ -1,8 +1,6 @@
 <script setup lang="ts">
-const email = ref('')
-const password = ref('')
 const showPassword = ref(false)
-
+const { signIn, signUp } = useAuth()
 
 const items = [
     {
@@ -22,6 +20,12 @@ const formSignUp = ref({
     lname: "",
     username: "",
     password: ""
+})
+
+
+const formSignIN = ref({
+    username: "",
+    password: "",
 })
 
 </script>
@@ -59,13 +63,13 @@ const formSignUp = ref({
                         <template #sign-in>
                             <div class="pt-4">
                                 <form class="mt- space-y-4" @submit.prevent>
-                                    <UFormField label="Your email">
-                                        <UInput v-model="email" type="email" placeholder="you@example.com" size="lg"
+                                    <UFormField label="Username">
+                                        <UInput v-model="formSignIN.username" type="username" placeholder="ss" size="lg"
                                             class="w-full" />
                                     </UFormField>
 
                                     <UFormField label="Password">
-                                        <UInput v-model="password" :type="showPassword ? 'text' : 'password'"
+                                        <UInput v-model="formSignIN.password" :type="showPassword ? 'text' : 'password'"
                                             placeholder="••••••••••" size="lg" class="w-full">
                                             <template #trailing>
                                                 <UButton :icon="showPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'"
@@ -76,7 +80,7 @@ const formSignUp = ref({
                                         </UInput>
                                     </UFormField>
 
-                                    <UButton type="submit" block size="lg" label="Get Started" />
+                                    <UButton @click="signIn(formSignIN)" type="submit" block size="lg" label="Get Started" />
                                 </form>
                                 <p class="mt-6 text-center text-sm text-gray-500">
                                     Don&#39;t have an account?
@@ -116,7 +120,7 @@ const formSignUp = ref({
                                     </UFormField>
 
                                 </form>
-                                <UButton @click="SignUP(formSignUp)" type="submit" block size="lg" label="Create Account" />
+                                <UButton @click="signUp(formSignUp)" type="submit" block size="lg" label="Create Account" />
                                 <p class="mt-6 text-center text-sm text-gray-500">
                                     Already have an account?
                                     <ULink to="/signin" class="font-medium text-orange-600">Sign in</ULink>
