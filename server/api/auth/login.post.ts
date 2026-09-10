@@ -3,8 +3,8 @@ import jwt from 'jsonwebtoken'
 import type { UserRow } from '~~/server/types/db'
 import { throwError } from '~~/server/utils/functions'
 
-export default defineEventHandler(async (event) => {
-  const { username, password } = await readBody(event)
+export default defineEventHandler(async (e) => {
+  const { username, password } = await readBody(e)
 
   if (!username || !password) throwError(400, 'Please complete all information')
 
@@ -18,13 +18,18 @@ export default defineEventHandler(async (event) => {
   const payload = { id: user.id, username: user.username, role: user.role }
   const token = jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: '7d' })
 
-  setCookie(event, 'auth_token', token, {
+
+  console.log(token)
+  setCookie(e, 'auth_token', token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
     maxAge: 60 * 60 * 24 * 7,
     path: '/',
   })
+
+  // console.log(token)
+  // console.log(getCookie(e, 'auth_token'))
 
   return { success: true, msg: 'SignIn Success!', role: user.role }
 })
