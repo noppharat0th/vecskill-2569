@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+:root,
+.light {
+    --ui-bg: oklch(100% 0 0);
+    --ui-bg-elevated: oklch(98% 0 0);
+    --ui-bg-accented: oklch(95% 0.002 264);
+    --ui-bg-inverted: oklch(20% 0 0);
+
+    --ui-text: oklch(15% 0 0);
+    --ui-text-muted: oklch(50% 0 0);
+    --ui-text-dimmed: oklch(65% 0 0);
+    --ui-text-highlighted: oklch(10% 0 0);
+    --ui-text-inverted: oklch(98% 0 0);
+
+    --ui-border: oklch(90% 0.002 264);
+    --ui-border-accented: oklch(85% 0.004 264);
+    --ui-border-inverted: oklch(20% 0 0);
+
+    color-scheme: light;
+}
