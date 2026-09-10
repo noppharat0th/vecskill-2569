@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const route = useRoute()
+const { logout, user } = useAuth()
 
 const menus = [
     {
@@ -72,8 +73,11 @@ const isActive = (to: string) => route.path === to
         <div class="flex items-center gap-2.5 px-2 pt-3 mt-1 border-t border-gray-100">
             <UAvatar src="https://i.pravatar.cc/40?img=12" size="sm" alt="User avatar" />
             <div class="min-w-0">
-                <p class="text-xs font-semibold text-orange-950 truncate">Lukmon Ilebiyi</p>
-                <p class="text-[10px] text-gray-400 truncate">lukmonilebyi@gmail.com</p>
+                <p class="text-xs font-semibold text-orange-950 truncate">{{ user?.username }}</p>
+                <p class="text-[10px] text-gray-400 truncate">{{ user?.role }}</p>
+            </div>
+            <div @click="logout">
+                <UBadge icon="i-lucide-logout" color="error" variant="subtle" />
             </div>
         </div>
 
