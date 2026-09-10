@@ -16,6 +16,13 @@ const items = [
         slot: 'sign-up'
     }
 ]
+// fname, lname, username, password
+const formSignUp = ref({
+    fname: "",
+    lname: "",
+    username: "",
+    password: ""
+})
 
 </script>
 
@@ -80,14 +87,24 @@ const items = [
 
                         <template #sign-up>
                             <div class="pt-4">
-                                <form class="mt- space-y-4" @submit.prevent>
-                                    <UFormField label="Your email">
-                                        <UInput v-model="email" type="email" placeholder="you@example.com" size="lg"
+                                <form class="mt- space-y-4 gap-x-2 grid grid-cols-2" @submit.prevent>
+                                    <UFormField label="Fistname">
+                                        <UInput v-model="formSignUp.fname" type="text" placeholder="you@example.com" size="lg"
+                                            class="w-full" />
+                                    </UFormField>
+
+                                    <UFormField label="Lastname">
+                                        <UInput v-model="formSignUp.lname" type="text" placeholder="you@example.com" size="lg"
+                                            class="w-full" />
+                                    </UFormField>
+
+                                    <UFormField label="Username">
+                                        <UInput v-model="formSignUp.username" type="text" placeholder="you@example.com" size="lg"
                                             class="w-full" />
                                     </UFormField>
 
                                     <UFormField label="Password">
-                                        <UInput v-model="password" :type="showPassword ? 'text' : 'password'"
+                                        <UInput v-model="formSignUp.password" :type="showPassword ? 'text' : 'password'"
                                             placeholder="••••••••••" size="lg" class="w-full">
                                             <template #trailing>
                                                 <UButton :icon="showPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'"
@@ -98,8 +115,8 @@ const items = [
                                         </UInput>
                                     </UFormField>
 
-                                    <UButton type="submit" block size="lg" label="Create Account" />
                                 </form>
+                                <UButton @click="SignUP(formSignUp)" type="submit" block size="lg" label="Create Account" />
                                 <p class="mt-6 text-center text-sm text-gray-500">
                                     Already have an account?
                                     <ULink to="/signin" class="font-medium text-orange-600">Sign in</ULink>
