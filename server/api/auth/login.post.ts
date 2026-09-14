@@ -18,7 +18,6 @@ export default defineEventHandler(async (e) => {
   const token = jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: '7d' })
 
 
-  console.log(token)
   setCookie(e, 'auth_token', token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',

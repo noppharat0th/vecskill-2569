@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useAuth } from '~/composables/useAuth';
+
 const route = useRoute()
 const { logout, user } = useAuth()
 

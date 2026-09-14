@@ -1,4 +1,5 @@
 import type { AuthPayload } from '~~/shared/types/user'
+import { useApi } from './useApi'
 
 export const useAuth = () => {
     const user = useState<AuthPayload | null>('auth.user', () => null)

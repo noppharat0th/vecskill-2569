@@ -6,12 +6,12 @@ import { throwError } from './functions'
 // Check Token , Cookie
 export function reqAuth(event: H3Event): AuthPayload {
   const token = getCookie(event, 'auth_token')
-  if (!token) throwError(401,  'plase login!')
+  if (!token) throwError(401, 'plase login!')
 
   try {
     return jwt.verify(token, process.env.JWT_SECRET!) as AuthPayload
   } catch {
-    throwError(401 , 'Token Invalid!')
+    throwError(401, 'Token Invalid!')
   }
 }
 

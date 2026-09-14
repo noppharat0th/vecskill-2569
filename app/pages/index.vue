@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useAuth } from '~/composables/useAuth'
+
 const showPassword = ref(false)
 const { signIn, signUp } = useAuth()
 
@@ -80,7 +82,8 @@ const formSignIN = ref({
                                         </UInput>
                                     </UFormField>
 
-                                    <UButton @click="signIn(formSignIN)" type="submit" block size="lg" label="Get Started" />
+                                    <UButton @click="signIn(formSignIN)" type="submit" block size="lg"
+                                        label="Get Started" />
                                 </form>
                                 <p class="mt-6 text-center text-sm text-gray-500">
                                     Don&#39;t have an account?
@@ -93,18 +96,18 @@ const formSignIN = ref({
                             <div class="pt-4">
                                 <form class="mt- space-y-4 gap-x-2 grid grid-cols-2" @submit.prevent>
                                     <UFormField label="Fistname">
-                                        <UInput v-model="formSignUp.fname" type="text" placeholder="you@example.com" size="lg"
-                                            class="w-full" />
+                                        <UInput v-model="formSignUp.fname" type="text" placeholder="you@example.com"
+                                            size="lg" class="w-full" />
                                     </UFormField>
 
                                     <UFormField label="Lastname">
-                                        <UInput v-model="formSignUp.lname" type="text" placeholder="you@example.com" size="lg"
-                                            class="w-full" />
+                                        <UInput v-model="formSignUp.lname" type="text" placeholder="you@example.com"
+                                            size="lg" class="w-full" />
                                     </UFormField>
 
                                     <UFormField label="Username">
-                                        <UInput v-model="formSignUp.username" type="text" placeholder="you@example.com" size="lg"
-                                            class="w-full" />
+                                        <UInput v-model="formSignUp.username" type="text" placeholder="you@example.com"
+                                            size="lg" class="w-full" />
                                     </UFormField>
 
                                     <UFormField label="Password">
@@ -120,7 +123,8 @@ const formSignIN = ref({
                                     </UFormField>
 
                                 </form>
-                                <UButton @click="signUp(formSignUp)" type="submit" block size="lg" label="Create Account" />
+                                <UButton @click="signUp(formSignUp)" type="submit" block size="lg"
+                                    label="Create Account" />
                                 <p class="mt-6 text-center text-sm text-gray-500">
                                     Already have an account?
                                     <ULink to="/signin" class="font-medium text-orange-600">Sign in</ULink>

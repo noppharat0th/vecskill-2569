@@ -6,10 +6,11 @@
 //   { prefix: '/api/evaluatee', roles: ['evaluatee', 'admin'] }
 // ]
 
-// export default defineEventHandler((event) => {
-//   const rule = roleRules.find(r => event.path.startsWith(r.prefix))
+export default defineEventHandler((e) => {
+    console.log('asd')
+    //   const rule = roleRules.find(r => event.path.startsWith(r.prefix))
 
-//   if (rule) {
-//     reqRole(event, rule.roles as any)
-//   }
-// })
+    //   if (rule) {
+    //     reqRole(event, rule.roles as any)
+    //   }
+})
