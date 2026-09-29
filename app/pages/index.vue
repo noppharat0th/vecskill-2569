@@ -35,9 +35,16 @@ const formSignIN = ref({
         <div class="min-h-screen flex items-center justify-center p-6 bg-gray-100">
             <div class="grid w-full max-w-4xl grid-cols-1 gap-3 rounded-[28px] bg-white p-3 shadow-sm md:grid-cols-2">
 
-                <div class="relative hidden min-h-[520px] overflow-hidden rounded-3xl md:block" <!-- mesh gradient -->
-                    <div class="absolute -inset-16 blur-3xl"
-                        :style="{ background: 'radial-gradient(circle at 15% 25%, #7c2d12 0%, transparent 45%), radial-gradient(circle at 78% 12%, #ea580c 0%, transparent 50%), radial-gradient(circle at 30% 75%, #9a3412 0%, transparent 55%), radial-gradient(circle at 88% 68%, #fed7aa 0%, transparent 45%), linear-gradient(160deg, #431407 0%, #c2410c 55%, #fb923c 100%)' }" />
+                <div class="relative hidden min-h-[520px] overflow-hidden rounded-3xl md:block">
+
+                    <!-- mesh gradient -->
+                    <div class="absolute -inset-16 blur-3xl" style="background:
+                        radial-gradient(circle at 15% 25%, #1e3a8a 0%, transparent 45%),
+                        radial-gradient(circle at 78% 12%, #2563eb 0%, transparent 50%),
+                        radial-gradient(circle at 30% 75%, #1e40af 0%, transparent 55%),
+                        radial-gradient(circle at 88% 68%, #bfdbfe 0%, transparent 45%),
+                        linear-gradient(160deg, #172554 0%, #1d4ed8 55%, #60a5fa 100%);"
+                    />
 
                     <div class="relative z-10 flex h-full flex-col justify-between p-8">
                         <UIcon name="i-lucide-asterisk" class="size-8 text-white" />
@@ -84,7 +91,7 @@ const formSignIN = ref({
                                 </form>
                                 <p class="mt-6 text-center text-sm text-gray-500">
                                     Don&#39;t have an account?
-                                    <ULink to="/signup" class="font-medium text-orange-600">Sign up</ULink>
+                                    <ULink to="/signup" class="font-medium text-blue-600">Sign up</ULink>
                                 </p>
                             </div>
                         </template>
@@ -123,7 +130,7 @@ const formSignIN = ref({
                                 <UButton @click="signUp(formSignUp)" type="submit" block size="lg" label="Create Account" />
                                 <p class="mt-6 text-center text-sm text-gray-500">
                                     Already have an account?
-                                    <ULink to="/signin" class="font-medium text-orange-600">Sign in</ULink>
+                                    <ULink to="/signin" class="font-medium text-blue-600">Sign in</ULink>
                                 </p>
                             </div>
                         </template>

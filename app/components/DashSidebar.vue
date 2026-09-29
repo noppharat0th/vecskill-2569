@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const route = useRoute()
 const { logout, user } = useAuth()
+const { collapsed, toggle } = useSidebar()
 
 const menus = [
     {
@@ -29,36 +30,57 @@ const menus = [
     },
 ]
 
-
 const isActive = (to: string) => route.path === to
 </script>
 
 <template>
-    <aside class="flex flex-col w-[230px] min-h-screen bg-white border-r border-gray-100 px-3 py-5 gap-1 shrink-0">
-
-        <!-- Logo -->
-        <div class="flex items-center gap-2.5 px-2 pb-4 mb-1 border-b border-gray-100">
-            <div>
-                <span class="text-3xl font-bold text-orange-950 tracking-tight">NV<span
-                        class="text-orange-500">MN</span></span>
-                <p class="text-xs text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-            </div>
-            <UButton icon="i-lucide-panel-left-close" color="neutral" variant="ghost" size="xs"
-                class="ml-auto text-gray-400" />
+    <aside
+        class="flex flex-col min-h-screen bg-white border-r border-gray-100 py-5 shrink-0 transition-all duration-300 ease-in-out overflow-hidden"
+        :class="collapsed ? 'w-[68px] px-2' : 'w-[230px] px-3'"
+    >
+        <!-- Logo & Toggle -->
+        <div class="flex items-center gap-2.5 px-2 pb-4 mb-1 border-b border-gray-100"
+            :class="collapsed ? 'justify-center' : ''">
+            <span v-if="!collapsed" class="text-base font-bold text-blue-950 tracking-tight whitespace-nowrap">
+                Mr.Adul
+            </span>
+            <UButton
+                :icon="collapsed ? 'i-lucide-panel-left-open' : 'i-lucide-panel-left-close'"
+                color="neutral" variant="ghost" size="xs"
+                :class="collapsed ? '' : 'ml-auto'"
+                class="text-gray-400 shrink-0"
+                @click="toggle"
+            />
         </div>
 
         <!-- Nav -->
         <nav class="flex-1 overflow-y-auto flex flex-col gap-5 mt-2">
-            <!-- Menu Groups -->
             <div v-for="group in menus" :key="group.category">
-                <p class="text-[10px]  tracking-widest text-gray-400 px-2 mb-1.5">{{ group.category }}</p>
+                <!-- Category label -->
+                <p v-if="!collapsed"
+                    class="text-[10px] font-semibold tracking-widest text-gray-400 uppercase px-2 mb-1.5 whitespace-nowrap">
+                    {{ group.category }}
+                </p>
+                <!-- Thin divider when collapsed  -->
+                <div v-else class="mx-auto mb-2 w-5 border-t border-gray-200" />
+
                 <ul class="flex flex-col gap-0.5">
                     <li v-for="item in group.items" :key="item.label">
-                        <NuxtLink :to="item.to"
-                            class="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-sm transition-all duration-150"
+                        <UTooltip v-if="collapsed" :text="item.label" :popper="{ placement: 'right' }">
+                            <NuxtLink :to="item.to"
+                                class="flex items-center justify-center p-2 rounded-xl transition-all duration-150"
+                                :class="isActive(item.to) && item.to !== ''
+                                    ? 'bg-blue-50 text-blue-600'
+                                    : 'text-gray-500 hover:bg-gray-50 hover:text-blue-500'">
+                                <UIcon :name="item.icon" class="size-[18px] shrink-0" />
+                            </NuxtLink>
+                        </UTooltip>
+
+                        <NuxtLink v-else :to="item.to"
+                            class="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-sm font-medium transition-all duration-150 whitespace-nowrap"
                             :class="isActive(item.to) && item.to !== ''
-                                ? 'bg-orange-50 text-orange-600 font-semibold'
-                                : 'text-gray-500 hover:bg-gray-50 hover:text-orange-500'">
+                                ? 'bg-blue-50 text-blue-600 font-semibold'
+                                : 'text-gray-500 hover:bg-gray-50 hover:text-blue-500'">
                             <UIcon :name="item.icon" class="size-4 shrink-0" />
                             {{ item.label }}
                         </NuxtLink>
@@ -67,19 +89,17 @@ const isActive = (to: string) => route.path === to
             </div>
         </nav>
 
-
-
         <!-- User Profile -->
-        <div class="flex items-center gap-2.5 px-2 pt-3 mt-1 border-t border-gray-100">
-            <UAvatar src="https://i.pravatar.cc/40?img=12" size="sm" alt="User avatar" />
-            <div class="min-w-0">
-                <p class="text-xs font-semibold text-orange-950 truncate">{{ user?.username }}</p>
+        <div class="flex items-center gap-2.5 px-2 pt-3 mt-1 border-t border-gray-100"
+            :class="collapsed ? 'justify-center' : ''">
+            <UAvatar src="https://i.pravatar.cc/40?img=12" size="sm" alt="User avatar" class="shrink-0" />
+            <div v-if="!collapsed" class="min-w-0 flex-1">
+                <p class="text-xs font-semibold text-blue-950 truncate">{{ user?.username }}</p>
                 <p class="text-[10px] text-gray-400 truncate">{{ user?.role }}</p>
             </div>
-            <div @click="logout">
-                <UBadge icon="i-lucide-logout" color="error" variant="subtle" />
+            <div v-if="!collapsed" @click="logout" class="cursor-pointer">
+                <UBadge icon="i-lucide-log-out" color="error" variant="subtle" />
             </div>
         </div>
-
     </aside>
 </template>
