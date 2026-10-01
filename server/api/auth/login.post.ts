@@ -26,7 +26,7 @@ export default defineEventHandler(async (e) => {
     path: '/',
   })
 
-  // console.log(token)
+  console.log(token)
   // console.log(getCookie(e, 'auth_token'))
 
   return { success: true, msg: 'SignIn Success!', role: user.role }

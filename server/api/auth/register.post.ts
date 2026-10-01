@@ -3,6 +3,7 @@ import type { UserRow } from '~~/server/types/db'
 import { reqFields, throwError } from '~~/server/utils/functions'
 
 export default defineEventHandler(async (event) => {
+    console.log("สมัครสมาชิก")
     const { fname, lname, username, password } = await readBody(event)
     reqFields([fname, lname, username, password])
 

@@ -1,0 +1,5 @@
+name: BaseUrl
+color: "#2E8A54"
+variables:
+  - name: BaseUrl
+    value: http://127.0.0.:3000
