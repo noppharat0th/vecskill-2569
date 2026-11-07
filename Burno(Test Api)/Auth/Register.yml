@@ -13,7 +13,7 @@ http:
         "fname": "ahsgd",
         "lname": "qasdasd", 
         "username": "user1",
-        "password": "ฟหกหก",
+        "password": "ฟหกหก"
       }
   auth: inherit
 

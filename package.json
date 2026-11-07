@@ -6,8 +6,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "preview": "nuxt preview"
   },
   "dependencies": {
     "@nuxt/ui": "^4.11.1",
@@ -20,8 +19,9 @@
     "vue-router": "^5.3.0"
   },
   "devDependencies": {
+    "@iconify-json/lucide": "^1.2.139",
     "@types/bcrypt": "^6.0.0",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^26.5.0"
+    "@types/node": "^26.6.4"
   }
 }
