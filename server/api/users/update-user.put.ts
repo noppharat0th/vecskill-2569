@@ -6,7 +6,7 @@ export default defineEventHandler(async (e) => {
 
     if(role !== 'admin' && userId !== Number(id))
         throwError(403, 'No Unauthorized')
-
+    
     await query('UPDATE users SET ? WHERE id = ?', [body, id])
 
     return sendRes({ data: `แก้ไขผู้ใช้สำเร็จ` })
