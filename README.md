@@ -2,6 +2,20 @@
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
+## Evaluation API
+
+The evaluation endpoints use the `evaluations` table defined in `server/init-db/01-schema.sql`.
+
+| Method | Endpoint | Purpose |
+| --- | --- | --- |
+| `POST` | `/api/evaluations/add-eval` | Create an evaluation |
+| `PUT` | `/api/evaluations/change-eval/:id` | Update an evaluation |
+| `DELETE` | `/api/evaluations/del-eval/:id` | Delete an evaluation |
+| `GET` | `/api/evaluations/list-eval` | List evaluations |
+| `GET` | `/api/evaluations/list-eval-id/:id` | Get one evaluation |
+
+Create and update requests accept `title`, `stat_date`, and `end_date`; dates must use `YYYY-MM-DD` and `end_date` cannot be earlier than `stat_date`.
+
 ## Setup
 
 Make sure to install dependencies:
