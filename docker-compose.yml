@@ -20,7 +20,7 @@ services:
       - PMA_HOST=mariadb
     ports:
       - "8080:80"
-    depends_on:
+    depends_on:อ
       - mariadb
 
 volumes:

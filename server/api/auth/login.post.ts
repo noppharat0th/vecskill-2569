@@ -1,7 +1,7 @@
 import { query } from '~~/server/utils/db'
 import jwt from 'jsonwebtoken'
 import type { UserRow } from '~~/server/types/db'
-import { reqFields, throwError } from '~~/server/utils/functions'
+import { reqFields, sendRes, throwError } from '~~/server/utils/functions'
 
 export default defineEventHandler(async (e) => {
   const { username, password } = await readBody(e)
@@ -26,8 +26,8 @@ export default defineEventHandler(async (e) => {
     path: '/',
   })
 
-  console.log(token)
+  // console.log(token)
   // console.log(getCookie(e, 'auth_token'))
 
-  return { success: true, msg: 'SignIn Success!', role: user.role }
+  return sendRes({ data: token })
 })

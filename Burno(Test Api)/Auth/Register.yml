@@ -4,16 +4,17 @@ info:
   seq: 1
 
 http:
-  method: GET
-  url: http://localhost:3000/api/users
+  method: POST
+  url: "{{BaseUrl}}/api/users/create-user"
   body:
     type: json
     data: |-
       {
-        "fname": "ahsgd",
-        "lname": "qasdasd", 
-        "username": "user1",
-        "password": "ฟหกหก"
+        "fname": "ahsaagd",
+        "lname": "asd", 
+        "username": "uasser1",
+        "password": "ฟหกหก",
+        "role": "admin"
       }
   auth: inherit
 
