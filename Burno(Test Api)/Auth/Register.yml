@@ -4,17 +4,17 @@ info:
   seq: 1
 
 http:
-  method: POST
-  url: "{{BaseUrl}}/api/users/create-user"
+  method: GET
+  url: "{{BaseUrl}}/api/users/get-role"
   body:
     type: json
     data: |-
       {
-        "fname": "ahsaagd",
+        "fname": "ahsaagd  ",
         "lname": "asd", 
-        "username": "uasser1",
+        "username": "asd",
         "password": "ฟหกหก",
-        "role": "admin"
+        "role": "evaluator"
       }
   auth: inherit
 
