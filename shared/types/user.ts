@@ -13,3 +13,9 @@ export interface AuthPayload {
   username: string
   role: 'admin' | 'evaluator' | 'evaluatee'
 }
+
+// response
+export interface Response<T> {
+  status: 'success' | 'error'
+  data: T
+}

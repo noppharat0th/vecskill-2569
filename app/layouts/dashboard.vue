@@ -9,3 +9,9 @@
         </div>
     </div>
 </template>
+
+<script setup lang="ts">
+import { useSidebar } from '~/composables/useSidebar';
+
+
+</script>

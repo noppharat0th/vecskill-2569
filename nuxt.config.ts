@@ -1,9 +1,15 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
 
-  modules: ['@nuxt/ui', 'nuxt-charts'],
+  devtools: {
+    enabled: true
+  },
+
+  modules: [
+    '@nuxt/ui',
+    'nuxt-charts'
+  ],
+
   css: ['~/assets/global.css'],
 
   colorMode: {
@@ -12,10 +18,16 @@ export default defineNuxtConfig({
     classSuffix: ''
   },
 
+  imports: {
+    dirs: [
+      'composables'
+    ]
+  },
+
   runtimeConfig: {
     dbHost: process.env.DB_HOST,
     dbUser: process.env.DB_USER,
     dbPassword: process.env.DB_PASSWORD,
-    dbName: process.env.DB_NAME,
+    dbName: process.env.DB_NAME
   }
 })

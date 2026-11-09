@@ -1,4 +1,6 @@
+import { sendRes } from "~~/server/utils/functions"
+
 export default defineEventHandler((e) => {
   deleteCookie(e, 'auth_token', { path: '/' })
-  return { success: true, msg: 'logout success' }
+  return sendRes({ data: 'logout success' })
 })

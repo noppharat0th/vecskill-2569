@@ -1,0 +1,6 @@
+name: BaseUrl
+color: "#2E8A54"
+variables:
+  - name: BaseUrl
+    value: http://localhost:3000
+    description: ""

@@ -1,13 +1,12 @@
 import { query } from '~~/server/utils/db'
 import jwt from 'jsonwebtoken'
 import type { UserRow } from '~~/server/types/db'
-import { throwError } from '~~/server/utils/functions'
+import { reqFields, sendRes, throwError } from '~~/server/utils/functions'
 
 export default defineEventHandler(async (e) => {
   const { username, password } = await readBody(e)
-
-  if (!username || !password) throwError(400, 'Please complete all information')
-
+  reqFields([username, password])
+  
   // query
   const rows = await query<UserRow[]>('SELECT * FROM users WHERE username = ?', [username])
   const user = rows[0]
@@ -19,7 +18,6 @@ export default defineEventHandler(async (e) => {
   const token = jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: '7d' })
 
 
-  console.log(token)
   setCookie(e, 'auth_token', token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
@@ -31,5 +29,5 @@ export default defineEventHandler(async (e) => {
   // console.log(token)
   // console.log(getCookie(e, 'auth_token'))
 
-  return { success: true, msg: 'SignIn Success!', role: user.role }
+  return sendRes({ data: token })
 })

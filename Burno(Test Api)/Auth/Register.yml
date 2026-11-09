@@ -1,0 +1,26 @@
+info:
+  name: Register
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{BaseUrl}}/api/users/create-user"
+  body:
+    type: json
+    data: |-
+      {
+        "fname": "ahsaagd",
+        "lname": "asd", 
+        "username": "uasser1",
+        "password": "ฟหกหก",
+        "role": "admin"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
