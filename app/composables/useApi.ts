@@ -1,4 +1,4 @@
-export const useApi = () => {
+export const useApi = () => {    
     return {
         get: <T>(url: string, params?: Record<string, any>) =>
             $fetch<T>(`/api${url}`, { method: 'GET', params }),
@@ -15,4 +15,4 @@ export const useApi = () => {
         delete: <T>(url: string) =>
             $fetch<T>(`/api${url}`, { method: 'DELETE' }),
     }
-}
+} 

@@ -31,6 +31,16 @@ const formSignIN = ref({
 </script>
 
 <template>
-  login
+    <h1>login</h1>
+    <input type="text" class="border" v-model="formSignIN.username">
+    <input type="text" class="border" v-model="formSignIN.password">
+    <button @click="signIn(formSignIN)">submit login</button>
+    
+    <h1>register</h1>
+    <input type="text" class="border" v-model="formSignUp.fname">
+    <input type="text" class="border" v-model="formSignUp.lname">
+    <input type="text" class="border" v-model="formSignUp.username">
+    <input type="text" class="border" v-model="formSignUp.password">
+    <button @click="signUp(formSignUp)">submit register</button>
+     
 </template>
-
