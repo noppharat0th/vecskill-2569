@@ -1,6 +1,6 @@
 import { sendRes, throwError } from '~~/server/utils/functions'
 import { reqAuth } from '~~/server/utils/auth'
-import { db } from '~~/server/utils/query-builder'
+import { db } from '~~/server/utils/db'
 
 export default defineEventHandler(async (e) => {
     const userId = reqAuth(e).id
@@ -10,7 +10,7 @@ export default defineEventHandler(async (e) => {
     if(role !== 'admin' && userId !== Number(id))
         throwError(403, 'No Unauthorized')
     
-    await db.update('users', { fname, lname, username, password }, { id })
+    await db('users').where({ id }).update({ fname, lname, username, password })
 
     return sendRes({ data: `แก้ไขผู้ใช้สำเร็จ` })
 })  

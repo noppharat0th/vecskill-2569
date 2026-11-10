@@ -1,14 +1,13 @@
 import jwt from 'jsonwebtoken'
 import type { UserRow } from '~~/server/types/db'
 import { reqFields, sendRes, throwError } from '~~/server/utils/functions'
-import { db } from '~~/server/utils/query-builder'
+import { db } from '~~/server/utils/db'
 
 export default defineEventHandler(async (e) => {
   const { username, password } = await readBody(e)
   reqFields([username, password])
   
-  const rows = await db.select<UserRow>('users', { username })
-  const user = rows[0]
+  const user = await db<UserRow>('users').where({ username }).first()
 
   if (!user || password !== user.password) throwError(401, 'Invalid credentials')
 

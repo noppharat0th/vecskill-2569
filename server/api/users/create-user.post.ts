@@ -1,6 +1,6 @@
 import type { UserRow } from '~~/server/types/db'
 import { reqFields, sendRes, throwError } from '~~/server/utils/functions'
-import { db } from '~~/server/utils/query-builder'
+import { db } from '~~/server/utils/db'
 
 export default defineEventHandler(async (e) => {
     // console.log("create user")
@@ -10,11 +10,11 @@ export default defineEventHandler(async (e) => {
     if(!['evaluator' , 'evaluatee'].includes(role))
         throwError(400, 'role is invalid')
 
-    const existing = await db.select<UserRow>('users', { username })
+    const existing = await db<UserRow>('users').where({ username }).first()
 
-    if (existing.length > 0) 
+    if (existing)
         throwError(409, 'username Exist')
 
-    await db.insert('users', { fname, lname, username, password, role })
+    await db<UserRow>('users').insert({ fname, lname, username, password, role })
     return sendRes({ data: `เพิ่ม ${username} สำเสร็จ` })
 })
