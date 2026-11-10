@@ -7,7 +7,7 @@
 // ]
 
 export default defineEventHandler((e) => {
-    console.log('middleware')
+    console.log('middleware server')
     //   const rule = roleRules.find(r => event.path.startsWith(r.prefix))
 
     //   if (rule) {

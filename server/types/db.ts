@@ -5,3 +5,10 @@ import type { User } from '~~/shared/types/user'
 export interface UserRow extends User , RowDataPacket {
   password: string
 }
+
+export interface EvaluationRow extends RowDataPacket {
+  id: number
+  title: string
+  stat_date: Date | string
+  end_date: Date | string
+}

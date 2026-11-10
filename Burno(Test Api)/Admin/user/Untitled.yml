@@ -4,8 +4,8 @@ info:
   seq: 1
 
 http:
-  method: GET
-  url: "{{BaseUrl}}/api/users/get-users"
+  method: DELETE
+  url: "{{BaseUrl}}/api/users/-delusers/1"
   auth: inherit
 
 settings:
