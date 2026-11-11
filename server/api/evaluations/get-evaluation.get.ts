@@ -3,5 +3,5 @@ import { db } from '~~/server/utils/db'
 
 export default defineEventHandler(async (e) => {
     const rows = await db('evaluations').select('*')
-    return sendRes({ data: rows })
+    return sendRes( rows )
 })

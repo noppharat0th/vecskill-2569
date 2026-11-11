@@ -4,8 +4,8 @@ import { AuthPayload } from '~~/shared/types/user'
 import { throwError } from './functions'
 
 // Check Token , Cookie
-export function reqAuth(event: H3Event): AuthPayload {
-  const token = getCookie(event, 'auth_token')
+export function reqAuth(e: H3Event): AuthPayload {
+  const token = getCookie(e, 'auth_token')
   if (!token) throwError(401, 'plase login!')
 
   try {

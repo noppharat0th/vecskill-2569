@@ -4,8 +4,8 @@ import { db } from '~~/server/utils/db'
 
 export default defineEventHandler(async (e) => {
     // console.log("create user")
-    const { fname, lname, username, password, role } = await readBody(e)
-    reqFields([fname, lname, username, password, role])
+    const { fname, lname, username, role } = await readBody(e)
+    reqFields([fname, lname, username, role])
 
     if(!['evaluator' , 'evaluatee'].includes(role))
         throwError(400, 'role is invalid')
@@ -15,6 +15,6 @@ export default defineEventHandler(async (e) => {
     if (existing)
         throwError(409, 'username Exist')
 
-    await db<UserRow>('users').insert({ fname, lname, username, password, role })
-    return sendRes({ data: `เพิ่ม ${username} สำเสร็จ` })
+    await db<UserRow>('users').insert({ fname, lname, username, password: "1234", role })
+    return sendRes(`เพิ่ม ${username} สำเสร็จ`)
 })

@@ -6,5 +6,5 @@ export default defineEventHandler(async (e) => {
 
     await db('users').where({ id }).delete()
 
-    return sendRes({ data: `ลบผู้ใช้สำเร็จ` })
+    return sendRes(`ลบผู้ใช้สำเร็จ`)
 })

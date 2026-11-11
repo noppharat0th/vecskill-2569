@@ -27,5 +27,5 @@ export default defineEventHandler(async (e) => {
   // console.log(token)
   // console.log(getCookie(e, 'auth_token'))
 
-  return sendRes({ data: token })
+  return sendRes({ token })
 })

@@ -6,5 +6,5 @@ export default defineEventHandler(async (e) => {
     
     await db('evaluations').where({ id }).delete()
 
-    return sendRes({ data: `ลบหัวข้อการประเมินสำเร็จ` })
+    return sendRes(`ลบหัวข้อการประเมินสำเร็จ`)
 })

@@ -12,5 +12,5 @@ export default defineEventHandler(async (e) => {
     
     await db('users').where({ id }).update({ fname, lname, username, password })
 
-    return sendRes({ data: `แก้ไขผู้ใช้สำเร็จ` })
+    return sendRes(`แก้ไขผู้ใช้สำเร็จ`)
 })  

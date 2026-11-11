@@ -5,15 +5,15 @@ info:
 
 http:
   method: GET
-  url: "{{BaseUrl}}/api/users/get-role"
+  url: "{{BaseUrl}}/api/users/get-users"
   body:
     type: json
     data: |-
       {
-        "fname": "ahsaagd  ",
+        "fname": "ahsasdasd",
         "lname": "asd", 
         "username": "asd",
-        "password": "ฟหกหก",
+      //   "password": "ฟหกหก",
         "role": "evaluator"
       }
   auth: inherit

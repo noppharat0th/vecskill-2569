@@ -9,7 +9,7 @@ export function throwError(statusCode: number, message: string): never {
 export function sendRes<T>(data: T): Response<T> {
   return {
     status: 'success',
-    data: data
+    data
   }
 }
 

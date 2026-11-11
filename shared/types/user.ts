@@ -5,6 +5,7 @@ export interface User {
   lname: string
   username: string
   role: 'admin' | 'evaluator' | 'evaluatee'
+  is_reset: number
 }
 
 // auth

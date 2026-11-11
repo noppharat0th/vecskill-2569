@@ -6,5 +6,5 @@ export default defineEventHandler(async (e) => {
     reqFields([title, stat_date, end_date])
 
     await db('evaluations').insert({ title, stat_date, end_date })
-    return sendRes({ data: 'เพิ่มหัวข้อการประเมินสำเร็จ' })
+    return sendRes('เพิ่มหัวข้อการประเมินสำเร็จ')
 })
