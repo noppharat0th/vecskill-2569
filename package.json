@@ -11,6 +11,7 @@
   "dependencies": {
     "@nuxt/ui": "^4.11.1",
     "jsonwebtoken": "^9.0.3",
+    "knex": "^3.3.0",
     "mysql2": "^3.24.3",
     "nuxt": "^4.5.2",
     "nuxt-charts": "^2.2.1",

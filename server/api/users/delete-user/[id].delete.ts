@@ -1,10 +1,10 @@
-import { reqFields, sendRes } from '~~/server/utils/functions'
-import { db } from '~~/server/utils/query-builder'
+import { sendRes } from '~~/server/utils/functions'
+import { db } from '~~/server/utils/db'
 
 export default defineEventHandler(async (e) => {
-    const id  = await e.context.params
+    const id = e.context.params?.id
 
-    await db.remove('users', { id })
+    await db('users').where({ id }).delete()
 
     return sendRes({ data: `ลบผู้ใช้สำเร็จ` })
 })

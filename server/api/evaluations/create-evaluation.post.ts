@@ -1,10 +1,10 @@
 import { reqFields, sendRes } from '~~/server/utils/functions'
-import { db } from '~~/server/utils/query-builder'
+import { db } from '~~/server/utils/db'
 
 export default defineEventHandler(async (e) => {
-    const { title, start_date, end_date } = await readBody(e)
-    reqFields([title, start_date, end_date])
+    const { title, stat_date, end_date } = await readBody(e)
+    reqFields([title, stat_date, end_date])
 
-    await db.insert('evaluations', { title, start_date, end_date })
+    await db('evaluations').insert({ title, stat_date, end_date })
     return sendRes({ data: 'เพิ่มหัวข้อการประเมินสำเร็จ' })
 })
