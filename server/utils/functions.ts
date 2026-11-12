@@ -19,3 +19,16 @@ export function reqFields(values: unknown[]) {
     throwError(400, 'Please complete all information')
   }
 }
+
+// exist
+export const exist = async<T extends object>(
+  table: string,
+  where: Partial<T>,
+  msg = "ไม่พบข้อมูล"
+): Promise<T> => {
+  const row = await db<T>(table).where(where).first()
+
+  if(!row) throwError(404, msg)
+
+  return row as T
+}

@@ -1,16 +1,16 @@
 // user
 export interface User {
-  id: number
+  id: string
   fname: string
   lname: string
   username: string
   role: 'admin' | 'evaluator' | 'evaluatee'
-  is_reset: number
+  is_reset: string
 }
 
 // auth
 export interface AuthPayload {
-  id: number
+  id: string
   username: string
   role: 'admin' | 'evaluator' | 'evaluatee'
 }
@@ -20,3 +20,4 @@ export interface Response<T> {
   status: 'success' | 'error'
   data: T
 }
+

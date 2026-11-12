@@ -8,7 +8,7 @@ http:
   url: "{{BaseUrl}}/api/users/get-users"
   body:
     type: json
-    data: |-
+    data: |
       {
         "fname": "ahsasdasd",
         "lname": "asd", 
