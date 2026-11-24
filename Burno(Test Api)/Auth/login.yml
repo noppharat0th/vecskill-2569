@@ -8,7 +8,7 @@ http:
   url: "{{BaseUrl}}/api/auth/login"
   body:
     type: json
-    data: |-
+    data: |
       {
         "username": "a",
         "password": "1234"
