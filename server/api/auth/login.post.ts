@@ -6,13 +6,13 @@ import { db } from '~~/server/utils/db'
 export default defineEventHandler(async (e) => {
   const { username, password } = await readBody(e)
   reqFields([username, password])
-  
+
   const user = await db<UserRow>('users').where({ username }).first()
 
-  if (!user || password !== user.password) throwError(401, 'Invalid credentials')
+  if (!user || password !== user.password) throwError(401, 'ชื่อผู้ใช้ หรือ รหัสผ่าน ไม่ถูกต้อง!!')
 
   // setup cookie , token
-  const payload = { id: user.id, username: user.username, role: user.role }
+  const payload = { id: user.id, username: user.username, role: user.role, is_reset: user.is_reset }
   const token = jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: '7d' })
 
 

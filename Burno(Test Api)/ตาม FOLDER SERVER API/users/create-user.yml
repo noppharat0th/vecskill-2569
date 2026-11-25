@@ -1,0 +1,27 @@
+info:
+  name: create-user
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{BaseUrl}}/api/users/create-user"
+  body:
+    type: json
+    data: |2-
+          {
+            "fname": "aasddd",
+            "lname": "asdass",
+            "username": "aaa",
+            "password": "ddd",
+            "role": "evaluatee"
+        
+          }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

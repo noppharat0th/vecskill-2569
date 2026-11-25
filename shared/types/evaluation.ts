@@ -2,7 +2,7 @@
 export interface Evaluation {
   id: string
   title: string
-  stat_date: string
+  start_date: string
   end_date: string
 }
 

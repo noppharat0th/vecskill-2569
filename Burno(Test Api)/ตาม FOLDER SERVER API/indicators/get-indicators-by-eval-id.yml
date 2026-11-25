@@ -1,18 +1,11 @@
 info:
-  name: login
+  name: get-indicators-by-eval-id
   type: http
   seq: 2
 
 http:
-  method: POST
-  url: "{{BaseUrl}}/api/auth/login"
-  body:
-    type: json
-    data: |
-      {
-        "username": "a",
-        "password": "1234"
-      }
+  method: GET
+  url: "{{BaseUrl}}/api/indicators/2"
   auth: inherit
 
 settings:

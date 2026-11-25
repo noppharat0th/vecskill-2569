@@ -1,0 +1,27 @@
+info:
+  name: edit-indicator
+  type: http
+  seq: 3
+
+http:
+  method: PUT
+  url: "{{BaseUrl}}/api/indicators/edit-indicator/1"
+  body:
+    type: json
+    data: |-
+      {
+        "eval_id": 2,
+        "name": "การแต่งกายถูกระเบียบ (แก้ไข)",
+        "description": "นักเรียนแต่งกายถูกต้องตามระเบียบของสถานศึกษา",
+        "weight": 10,
+        "type": "boolean",
+        "type_file": "file"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

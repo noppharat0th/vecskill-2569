@@ -1,0 +1,16 @@
+info:
+  name: delete-user
+  type: http
+  seq: 4
+
+http:
+  method: DELETE
+  url: "{{BaseUrl}}/api/users/delete-user/2"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
