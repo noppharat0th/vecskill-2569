@@ -1,0 +1,25 @@
+info:
+  name: create-assignment
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{BaseUrl}}/api/assignments/create-assignment"
+  body:
+    type: json
+    data: |-
+      {
+        "eval_id": 2,
+        "evaluator_id": 4,
+        "evaluatee_id": 8,
+        "position": "ประธาน"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

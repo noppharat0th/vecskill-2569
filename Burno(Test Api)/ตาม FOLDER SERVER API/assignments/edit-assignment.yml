@@ -1,0 +1,25 @@
+info:
+  name: edit-assignment
+  type: http
+  seq: 3
+
+http:
+  method: PUT
+  url: "{{BaseUrl}}/api/assignments/edit-assignment/3"
+  body:
+    type: json
+    data: |-
+      {
+        "eval_id": 2,
+        "evaluator_id": 4,
+        "evaluatee_id": 7,
+        "position": "ประธาน"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
