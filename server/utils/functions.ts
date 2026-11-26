@@ -15,8 +15,8 @@ export function sendRes<T>(data: T): Response<T> {
 
 // reqFields
 export function reqFields(values: unknown[]) {
-  if(!values.every(Boolean)) {
-    throwError(400, 'Please complete all information')
+  if (!values.every(Boolean)) {
+    throwError(400, 'โปรดกรอกข้อมูลให้ครบ!!')
   }
 }
 
@@ -28,7 +28,7 @@ export const exist = async<T extends object>(
 ): Promise<T> => {
   const row = await db<T>(table).where(where).first()
 
-  if(!row) throwError(404, msg)
+  if (!row) throwError(404, msg)
 
   return row as T
 }

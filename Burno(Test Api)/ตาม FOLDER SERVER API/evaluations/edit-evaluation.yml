@@ -1,0 +1,24 @@
+info:
+  name: edit-evaluation
+  type: http
+  seq: 4
+
+http:
+  method: PUT
+  url: "{{BaseUrl}}/api/evaluations/edit-evaluation/2"
+  body:
+    type: json
+    data: |-
+      {
+        "title": "การประเมินทักษะประจำปี 2569",
+        "start_date": "2026-12-01",
+        "end_date": "2026-12-31"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

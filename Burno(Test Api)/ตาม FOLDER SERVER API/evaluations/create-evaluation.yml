@@ -1,0 +1,24 @@
+info:
+  name: create-evaluation
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{BaseUrl}}/api/evaluations/create-evaluation"
+  body:
+    type: json
+    data: |-
+      {
+        "title": "การประเมินทักษะประจำปี 2569",
+        "start_date": "2026-12-01",
+        "end_date": "2026-12-31"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

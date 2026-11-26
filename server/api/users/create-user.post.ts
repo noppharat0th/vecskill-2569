@@ -3,18 +3,27 @@ import { reqFields, sendRes, throwError } from '~~/server/utils/functions'
 import { db } from '~~/server/utils/db'
 
 export default defineEventHandler(async (e) => {
-    // console.log("create user")
-    const { fname, lname, username, role } = await readBody(e)
+    const { fname, lname, username, role, password } = await readBody(e)
     reqFields([fname, lname, username, role])
 
-    if(!['evaluator' , 'evaluatee'].includes(role))
+    if (!['evaluator', 'evaluatee'].includes(role)) {
         throwError(400, 'role is invalid')
+    }
 
     const existing = await db<UserRow>('users').where({ username }).first()
+    if (existing) {
+        throwError(409, 'username already exists')
+    }
 
-    if (existing)
-        throwError(409, 'username Exist')
+    const defaultPassword = password || '1234'
+    
+    await db<UserRow>('users').insert({ 
+        fname, 
+        lname, 
+        username, 
+        password: defaultPassword, 
+        role 
+    })
 
-    await db<UserRow>('users').insert({ fname, lname, username, password: "1234", role })
-    return sendRes(`เพิ่ม ${username} สำเสร็จ`)
+    return sendRes(`เพิ่ม ${username} สำเร็จ`)
 })

@@ -1,0 +1,27 @@
+info:
+  name: create-indicator
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{BaseUrl}}/api/indicators/create-indicators"
+  body:
+    type: json
+    data: |-
+      {
+        "eval_id": 2,
+        "name": "การแต่งกายถูกระเบียบ",
+        "description": "นักเรียนแต่งกายถูกต้องตามระเบียบ",
+        "weight": 10,
+        "type": "score",
+        "type_file": "url"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
