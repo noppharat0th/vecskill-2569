@@ -33,4 +33,14 @@ export function useIndicator() {
         const res = await api.put(`/indicator/delete-indicator/${form.value.id}`, form.value)
         await fetchIndicator()
     }
+
+
+    return{
+        fetchIndicator,
+        createIndicator,
+        updateIndicator,
+        deleteIndicator,
+        form,
+        indicators
+    }
 }

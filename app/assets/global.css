@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+/* body{
+    background-color: aqua;
+} */
+
 :root,
 .light {
     --ui-bg: oklch(100% 0 0);
@@ -19,4 +23,14 @@
     --ui-border-inverted: oklch(20% 0 0);
 
     color-scheme: light;
+}
+
+@font-face {
+    font-family: 'font-line';
+    src: url('/font.ttf');
+}
+
+html,
+body {
+    font-family: "font-line";
 }

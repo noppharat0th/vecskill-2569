@@ -1,51 +1,46 @@
-    export function useUserService(){
-        const api = useApi()
-        const error = ref('')
-        const users = ref<User[]>([])
+import type { User, Response } from '~~/shared/types/user'
 
-        const form = ref({
-            id: null as Number | null,
-            fname: "",
-            lname: "",
-            username: "",
-            password: "",
-            confirm_password: "",
-            role: ""
-        })
+export function useUserService() {
+  const api = useApi()
+  const error = ref('')
+  const users = ref<User[]>([])
 
-        const fetchUser = async () => {
-            const res = await api.get<User[]>('/users/get-user')
-            users.value = res
-        }
+  const form = ref({
+    id: null as number | null,
+    fname: '',
+    lname: '',
+    username: '',
+    password: '',
+    confirm_password: '',
+    role: '' as User['role'] | '',
+  })
 
-        const editUser = async () => {
-            if(form.value.id === null) return
+  const fetchUser = async () => {
+    const res = await api.get<Response<User[]>>('/users/get-users')
+    users.value = res.data
+    return users.value
+  }
 
-            await api.put(`/users/edit-user/${form.value.id}`, form.value)
-            await fetchUser()
-        }
+  const updateUser = async () => {
+    if (form.value.id === null) return
+    await api.put(`/users/update-user/${form.value.id}`, form.value)
+    await fetchUser()
+  }
 
-        const createUser = async() => {
-            if (form.value.password !== form.value.confirm_password) {
-                error.value = 'รหัสผ่านไม่ตรงกัน'
-                return
-            }
-
-            await api.post('/users/create-user', form)
-            await fetchUser()
-        }
-
-        const resetPassword = async() => {
-            
-        }
-
-        return {
-            form,
-            users,
-            fetchUser,
-            editUser,
-            createUser,
-            resetPassword   
-        }
-
+  const createUser = async () => {
+    error.value = ''
+    if (form.value.password !== form.value.confirm_password) {
+      error.value = 'รหัสผ่านไม่ตรงกัน'
+      return
     }
+
+    await api.post('/users/create-user', form.value)
+    await fetchUser()
+  }
+
+  const resetPassword = async () => {
+    await api.put('/auth/reset-password')
+  }
+
+  return { error, form, users, fetchUser, updateUser, createUser, resetPassword }
+}
