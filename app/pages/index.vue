@@ -31,7 +31,7 @@ const linkClass = 'text-[#1f5fc4] hover:underline'
 </script>
 
 <template>
-  <div class="relative flex min-h-screen flex-col pt-30 overflow-hidden bg-[#edebe9] font-sans text-[#333238]">
+  <div class="relative flex min-h-screen flex-col pt-20 overflow-hidden bg-[#edebe9] font-sans text-[#333238]">
     <div
       class="pointer-events-none absolute inset-x-0 bottom-0 h-[70%] blur-[30px] bg-[radial-gradient(ellipse_38%_55%_at_50%_100%,rgba(250,190,120,0.85),transparent_70%),radial-gradient(ellipse_30%_50%_at_70%_100%,rgba(240,160,170,0.7),transparent_70%),radial-gradient(ellipse_30%_55%_at_85%_100%,rgba(190,170,225,0.75),transparent_70%),radial-gradient(ellipse_28%_45%_at_22%_100%,rgba(245,200,180,0.6),transparent_70%)]"
       aria-hidden="true"

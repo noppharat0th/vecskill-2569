@@ -1,1 +1,0 @@
-import{g as e}from"#entry";var t=()=>({get:(t,n)=>e(`/api${t}`,{method:`GET`,params:n}),post:(t,n)=>e(`/api${t}`,{method:`POST`,body:n}),put:(t,n)=>e(`/api${t}`,{method:`PUT`,body:n}),patch:(t,n)=>e(`/api${t}`,{method:`PATCH`,body:n}),delete:t=>e(`/api${t}`,{method:`DELETE`})});export{t};

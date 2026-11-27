@@ -6,7 +6,7 @@ import { useUserService } from '~/composables/service/users'
 definePageMeta({ layout: 'dashboard' })
 useHead({ title: 'Manage users · PersonSystem' })
 
-const { users, fetchUser, createUser, deleteUser, form, error: formError } = useUserService()
+const { users, fetchUser, createUser, updateUser, deleteUser, form, error: formError } = useUserService()
 
 const roleColor: Record<string, string> = {
   evaluator: 'bg-blue-50 text-blue-700',
@@ -26,15 +26,19 @@ const fields = [
 ]
 
 const loading = ref(false)
-const creating = ref(false)
+const saving = ref(false)
+const isEditing = ref(false)
 const createModalOpen = ref(false)
+const formFields = computed(() => isEditing.value ? fields.map(field =>
+  field.key === 'password' ? { ...field, label: 'New password' } : field,
+) : fields)
 
 const columns: TableColumn<User>[] = [
   { key: 'id', label: 'ID' },
   { key: 'name', label: 'Name', value: u => [u.fname, u.lname].filter(Boolean).join(' ') },
   { key: 'username', label: 'Username' },
   { key: 'role', label: 'Role' },
-  { key: 'action', label: "Action"}
+  { key: 'action', label: 'Actions' },
 ]
 
 const { search, filteredRows } = useTableData(users, { columns })
@@ -50,23 +54,52 @@ async function loadUsers() {
 }
 
 function openCreateModal() {
+  isEditing.value = false
   form.value = { id: null, fname: '', lname: '', username: '', password: '', confirm_password: '', role: 'evaluatee' }
   formError.value = ''
   createModalOpen.value = true
 }
 
-async function submitCreateUser() {
-  formError.value = ''
-  creating.value = true
-  try {
-    if (await createUser()) {
-      createModalOpen.value = false
-    }
-  } catch (e: any) {
-    formError.value = e.message || 'Unable to create user.'
-  } finally {
-    creating.value = false
+function openEditModal(user: User) {
+  isEditing.value = true
+  form.value = {
+    id: user.id,
+    fname: user.fname,
+    lname: user.lname,
+    username: user.username,
+    password: '',
+    confirm_password: '',
+    role: user.role,
   }
+  formError.value = ''
+  createModalOpen.value = true
+}
+
+async function submitUser() {
+  formError.value = ''
+  if (isEditing.value && form.value.password !== form.value.confirm_password) {
+    formError.value = 'Passwords do not match.'
+    return
+  }
+
+  saving.value = true
+  try {
+    if (isEditing.value) await updateUser()
+    else if (!await createUser()) return
+    createModalOpen.value = false
+  } catch (e: any) {
+    formError.value = e.message || (isEditing.value ? 'Unable to update user.' : 'Unable to create user.')
+  } finally {
+    saving.value = false
+  }
+}
+
+function actionItems(user: User) {
+  return [
+    { label: 'Edit', icon: 'i-lucide-pencil', onSelect: () => openEditModal(user) },
+    { type: 'separator' as const },
+    { label: 'Delete', icon: 'i-lucide-trash-2', color: 'error' as const, onSelect: () => deleteUser(user.id) },
+  ]
 }
 
 onMounted(loadUsers)
@@ -109,9 +142,10 @@ onMounted(loadUsers)
           </template>
 
           <template #action="{ row }">
-            <div class="space-x-2">
-              <UButton icon="i-lucide-edit" color="warning" variant="soft"/>
-              <UButton @click="deleteUser(row.id)" icon="i-lucide-trash" color="error" variant="soft"/>
+            <div>
+              <UDropdownMenu :items="actionItems(row)">
+                <UButton icon="i-lucide-ellipsis" color="neutral" variant="ghost" aria-label="User actions" />
+              </UDropdownMenu>
             </div>
           </template>
         </Table>
@@ -122,25 +156,29 @@ onMounted(loadUsers)
       <template #content>
         <div class="space-y-5 p-5 sm:p-6">
           <header class="space-y-1">
-            <h2 class="text-lg font-semibold text-gray-900">Create user</h2>
-            <p class="text-sm text-gray-500">Add a user to your workspace.</p>
+            <h2 class="text-lg font-semibold text-gray-900">{{ isEditing ? 'Edit user' : 'Create user' }}</h2>
+            <p class="text-sm text-gray-500">
+              {{ isEditing ? 'Update details and set a new password.' : 'Add a user to your workspace.' }}
+            </p>
           </header>
 
-          <UAlert v-if="formError" color="error" variant="soft" title="Could not create user"
-            :description="formError" />
+          <UAlert v-if="formError" color="error" variant="soft"
+            :title="isEditing ? 'Could not update user' : 'Could not create user'" :description="formError" />
 
-          <form class="grid gap-x-3 gap-y-4 sm:grid-cols-2" @submit.prevent="submitCreateUser">
-            <label v-for="f in fields" :key="f.key" class="block space-y-1.5"
+          <form class="grid gap-x-3 gap-y-4 sm:grid-cols-2" @submit.prevent="submitUser">
+            <label v-for="f in formFields" :key="f.key" class="block space-y-1.5"
               :class="{ 'sm:col-span-2': f.full }">
               <span class="text-sm font-medium text-gray-700">{{ f.label }}</span>
-              <USelect v-if="f.key === 'role'" v-model="form.role" :items="createRoleOptions" required class="w-full" />
+              <USelect v-if="f.key === 'role'" v-model="form.role" :items="createRoleOptions"
+                :disabled="isEditing" required class="w-full" />
               <UInput v-else v-model="form[f.key]" :type="f.type" :autocomplete="f.auto" required class="w-full" />
             </label>
 
             <footer class="flex justify-end gap-2 border-t border-gray-100 pt-4 sm:col-span-2">
               <UButton label="Cancel" color="neutral" variant="ghost" type="button"
-                :disabled="creating" @click="createModalOpen = false" />
-              <UButton label="Create user" color="neutral" type="submit" :loading="creating" />
+                :disabled="saving" @click="createModalOpen = false" />
+              <UButton :label="isEditing ? 'Save changes' : 'Create user'" color="neutral"
+                type="submit" :loading="saving" />
             </footer>
           </form>
         </div>

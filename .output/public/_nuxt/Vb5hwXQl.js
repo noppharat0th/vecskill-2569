@@ -1,1 +1,0 @@
-import{D as e,_ as t,b as n,k as r,mt as i,xt as a}from"./CrzdsfCC.js";import{t as o}from"./DI4TbjuQ.js";var s={class:`flex min-h-screen w-full bg-[#f7f8fa]`},c={class:`min-w-0 flex-1`},l=r({__name:`dashboard`,setup(r){return(r,l)=>(i(),n(`div`,s,[e(o),t(`div`,c,[a(r.$slots,`default`)])]))}});export{l as default};

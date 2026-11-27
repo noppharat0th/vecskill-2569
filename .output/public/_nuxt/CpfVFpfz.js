@@ -1,1 +1,0 @@
-import{t as e}from"#entry";var t={};function n(e,t){return` users `}var r=e(t,[[`render`,n]]);export{r as default};
