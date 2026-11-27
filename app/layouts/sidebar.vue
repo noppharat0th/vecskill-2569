@@ -6,7 +6,8 @@ const sections = [
   {
     // title: 'WORKSPACE',
     items: [
-      { label: 'Users', icon: 'i-lucide-users-round', to: '/admin' },
+      { label: 'Overview', icon: 'i-lucide-home', to: '/admin' },
+      { label: 'Users', icon: 'i-lucide-users-round', to: '/admin/users' },
       { label: 'Evaluations', icon: 'i-lucide-clipboard-check', to: '/admin/evaluations' },
       { label: 'Indicators', icon: 'i-lucide-chart-no-axes-column-increasing', to: '/admin/indicators' },
 

@@ -1,145 +1,117 @@
-<script setup lang="ts">
-import type { User } from '~~/shared/types/user'
-import type { TableColumn } from '~/types/table'
-import { useUserService } from '~/composables/service/users'
+<script setup>
+import { useEvaluation } from '~/composables/service/evaluations'
 
 definePageMeta({ layout: 'dashboard' })
-useHead({ title: 'Manage users · PersonSystem' })
+useHead({ title: 'Evaluations · PersonSystem' })
 
-const { users, fetchUser, createUser, deleteUser, form, error: formError } = useUserService()
+const { evaluations, form, loading, saving, error, loadEvaluations, saveEvaluation } = useEvaluation()
 
-const roleColor: Record<string, string> = {
-  evaluator: 'bg-blue-50 text-blue-700',
-  evaluatee: 'bg-violet-50 text-violet-700',
-  admin: 'bg-gray-100 text-gray-700',
+const modalOpen = ref(false)
+const mode = ref('create')
+
+function dateLabel(value) {
+  const date = new Date(value)
+  return Number.isNaN(date.getTime()) ? value : new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric', month: 'short', year: 'numeric',
+  }).format(date)
 }
-const cap = (s: string) => s[0].toUpperCase() + s.slice(1)
-const createRoleOptions = ['evaluatee', 'evaluator'].map(role => ({ label: cap(role), value: role }))
 
-const fields = [
-  { key: 'fname', label: 'First name', auto: 'given-name' },
-  { key: 'lname', label: 'Last name', auto: 'family-name' },
-  { key: 'username', label: 'Username', auto: 'username', full: true },
-  { key: 'role', label: 'Role', full: true },
-  { key: 'password', label: 'Password', auto: 'new-password', type: 'password' },
-  { key: 'confirm_password', label: 'Confirm password', auto: 'new-password', type: 'password' },
+function dateInput(value) {
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return value.slice(0, 10)
+  return new Date(date.getTime() - date.getTimezoneOffset() * 60_000).toISOString().slice(0, 10)
+}
+
+const columns = [
+  { key: 'title', label: 'Evaluation topic' },
+  { key: 'period', label: 'Assessment period', value: row => `${dateLabel(row.start_date)} – ${dateLabel(row.end_date)}` },
+  { key: 'action', label: 'Actions' },
 ]
+const { search, filteredRows } = useTableData(evaluations, { columns, searchKeys: ['title', 'start_date', 'end_date'] })
 
-const loading = ref(false)
-const creating = ref(false)
-const createModalOpen = ref(false)
-const columns: TableColumn<User>[] = [
-  { key: 'id', label: 'ID' },
-  { key: 'name', label: 'Name', value: u => [u.fname, u.lname].filter(Boolean).join(' ') },
-  { key: 'username', label: 'Username' },
-  { key: 'role', label: 'Role' },
-  { key: 'action', label: "Action"}
-]
-
-const { search, filteredRows } = useTableData(users, { columns })
-
-async function loadUsers() {
-  loading.value = true
-  try {
-    await fetchUser()
-  } catch (e: any) {
-  } finally {
-    loading.value = false
-  }
+function openModal(row) {
+  mode.value = row ? 'edit' : 'create'
+  form.value = row
+    ? { id: row.id, title: row.title, start_date: dateInput(row.start_date), end_date: dateInput(row.end_date) }
+    : { id: null, title: '', start_date: '', end_date: '' }
+  error.value = ''
+  modalOpen.value = true
 }
 
-function openCreateModal() {
-  form.value = { id: null, fname: '', lname: '', username: '', password: '', confirm_password: '', role: 'evaluatee' }
-  formError.value = ''
-  createModalOpen.value = true
+function actionItems(row) {
+  return [{ label: 'Edit evaluation', icon: 'i-lucide-pencil', onSelect: () => openModal(row) }]
 }
 
-async function submitCreateUser() {
-  formError.value = ''
-  creating.value = true
-  try {
-    if (await createUser()) {
-      createModalOpen.value = false
-    }
-  } catch (e: any) {
-    formError.value = e.message || 'Unable to create user.'
-  } finally {
-    creating.value = false
-  }
+async function submitEvaluation() {
+  if (await saveEvaluation(mode.value)) modalOpen.value = false
 }
 
-onMounted(loadUsers)
+onMounted(loadEvaluations)
 </script>
 
 <template>
   <main class="min-w-0 flex-1 px-5 py-5 sm:px-7">
     <div class="w-full space-y-4">
-      <header class="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <div class="mb-1 flex items-center gap-2 text-[11px] text-gray-400">
-            <span>Workspace</span>
-            <UIcon name="i-lucide-chevron-right" class="size-3" />
-            <span class="text-gray-600">Evaluation</span>
-          </div>
-          <h1 class="text-xl font-semibold tracking-tight text-gray-900">Evaluation</h1>
-          <p class="mt-0.5 text-xs text-gray-500">View and manage the people in your workspace.</p>
-        </div>
-
-        <div class="flex items-center gap-2">
-          <UButton label="Create user" icon="i-lucide-user-plus" color="neutral" @click="openCreateModal" />
+      <PageHeader section="Workspace" title="Evaluations"
+        description="Create and manage assessment topics and periods.">
+        <template #actions>
+          <UButton label="Create evaluation" icon="i-lucide-plus" color="neutral" @click="openModal()" />
           <UButton label="Refresh" icon="i-lucide-refresh-cw" color="neutral" variant="outline"
-            :loading="loading" @click="loadUsers" />
-        </div>
-      </header>
+            :loading="loading" @click="loadEvaluations" />
+        </template>
+      </PageHeader>
+
+      <UAlert v-if="error && !modalOpen" color="error" variant="soft"
+        title="Could not load evaluations" :description="error" />
 
       <section class="overflow-hidden rounded-lg border border-gray-200 bg-white">
         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 px-3 py-2">
-          <div class="flex min-w-0 flex-1 flex-wrap items-center gap-2">
-            <BaseInput v-model="search" icon="i-lucide-search" placeholder="Search users…"
-              aria-label="Search users" width="search" />
-          </div>
-
+          <BaseInput v-model="search" icon="i-lucide-search" placeholder="Search evaluations…"
+            aria-label="Search evaluations" width="search" />
+          <span class="px-1 text-xs text-gray-500">{{ filteredRows.length }} evaluations</span>
         </div>
 
-        <Table :rows="filteredRows" :columns="columns" :loading="loading" empty-text="No users match your search.">
-          <template #role="{ value }">
-            <span class="inline-flex rounded-full px-2.5 py-1 text-[11px] font-medium capitalize"
-              :class="roleColor[value]">{{ value }}</span>
-          </template>
-
+        <Table :rows="filteredRows" :columns="columns" :loading="loading"
+          :empty-text="error ? 'Unable to load evaluations.' : 'No evaluations found.'">
           <template #action="{ row }">
-            <div class="space-x-2">
-              <UButton icon="i-lucide-edit" color="warning" variant="link"/>
-              <UButton @click="deleteUser(row.id)" icon="i-lucide-trash" color="error" variant="link"/>
+            <div>
+              <UDropdownMenu :items="actionItems(row)">
+                <UButton icon="i-lucide-ellipsis" color="neutral" variant="ghost" aria-label="Evaluation actions" />
+              </UDropdownMenu>
             </div>
           </template>
         </Table>
       </section>
     </div>
 
-    <UModal v-model:open="createModalOpen">
+    <UModal v-model:open="modalOpen">
       <template #content>
         <div class="space-y-5 p-5 sm:p-6">
           <header class="space-y-1">
-            <h2 class="text-lg font-semibold text-gray-900">Create user</h2>
-            <p class="text-sm text-gray-500">Add a user to your workspace.</p>
+            <h2 class="text-lg font-semibold text-gray-900">{{ mode === 'edit' ? 'Edit evaluation' : 'Create evaluation' }}</h2>
+            <p class="text-sm text-gray-500">Choose a topic and assessment period.</p>
           </header>
-
-          <UAlert v-if="formError" color="error" variant="soft" title="Could not create user"
-            :description="formError" />
-
-          <form class="grid gap-x-3 gap-y-4 sm:grid-cols-2" @submit.prevent="submitCreateUser">
-            <label v-for="f in fields" :key="f.key" class="block space-y-1.5"
-              :class="{ 'sm:col-span-2': f.full }">
-              <span class="text-sm font-medium text-gray-700">{{ f.label }}</span>
-              <USelect v-if="f.key === 'role'" v-model="form.role" :items="createRoleOptions" required class="w-full" />
-              <UInput v-else v-model="form[f.key]" :type="f.type" :autocomplete="f.auto" required class="w-full" />
+          <UAlert v-if="error" color="error" variant="soft" :description="error" />
+          <form class="space-y-4" @submit.prevent="submitEvaluation">
+            <label class="block space-y-1.5">
+              <span class="text-sm font-medium text-gray-700">Evaluation topic</span>
+              <UInput v-model="form.title" placeholder="e.g. Professional skills assessment" required class="w-full" />
             </label>
-
-            <footer class="flex justify-end gap-2 border-t border-gray-100 pt-4 sm:col-span-2">
+            <div class="grid gap-3 sm:grid-cols-2">
+              <label class="block space-y-1.5">
+                <span class="text-sm font-medium text-gray-700">Start date</span>
+                <UInput v-model="form.start_date" type="date" required class="w-full" />
+              </label>
+              <label class="block space-y-1.5">
+                <span class="text-sm font-medium text-gray-700">End date</span>
+                <UInput v-model="form.end_date" type="date" required class="w-full" />
+              </label>
+            </div>
+            <footer class="flex justify-end gap-2 border-t border-gray-100 pt-4">
               <UButton label="Cancel" color="neutral" variant="ghost" type="button"
-                :disabled="creating" @click="createModalOpen = false" />
-              <UButton label="Create user" color="neutral" type="submit" :loading="creating" />
+                :disabled="saving" @click="modalOpen = false" />
+              <UButton :label="mode === 'edit' ? 'Save changes' : 'Create evaluation'" color="neutral"
+                type="submit" :loading="saving" />
             </footer>
           </form>
         </div>

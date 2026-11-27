@@ -1,52 +1,64 @@
-// evaluation *id title start_date end_date
+import type { Evaluation } from '~~/shared/types/evaluation'
+import type { Response } from '~~/shared/types/user'
+
+type EvaluationForm = Omit<Evaluation, 'id'> & { id: Evaluation['id'] | null }
+type SaveMode = 'create' | 'edit'
 
 export function useEvaluation() {
-    const api = useApi()
-    const evaluations = ref()
+  const api = useApi()
+  const evaluations = ref<Evaluation[]>([])
+  const form = ref<EvaluationForm>({ id: null, title: '', start_date: '', end_date: '' })
+  const loading = ref(false)
+  const saving = ref(false)
+  const error = ref('')
 
-    const form = ref({
-        id: null as Number | null,
-        title: "",
-        start_date: "",
-        end_date: ""
-    })
+  const loadEvaluations = async () => {
+    loading.value = true
+    error.value = ''
+    try {
+      const response = await api.get<Response<Evaluation[]>>('/evaluations/get-evaluation')
+      evaluations.value = response.data ?? []
+      return true
+    } catch (e: any) {
+      error.value = e?.data?.message || e?.message || 'Unable to load evaluations.'
+      return false
+    } finally {
+      loading.value = false
+    }
+  }
 
-    const fetchEvaluation = async(id?: number) => {
-        const e_id = id ? id : null
-        let res ;
-
-        if(e_id){
-            res = await api.get(`/evaluations/get-evaluation/${e_id}`)
-        }else{
-            res = await api.get(`/evaluations/get-evaluation/`)
-        }
-
-        evaluations.value = res 
+  const saveEvaluation = async (mode: SaveMode) => {
+    error.value = ''
+    if (!form.value.title.trim()) {
+      error.value = 'Enter an evaluation topic.'
+      return false
+    }
+    if (!form.value.start_date || !form.value.end_date || form.value.start_date > form.value.end_date) {
+      error.value = 'End date must be on or after the start date.'
+      return false
+    }
+    if (mode === 'edit' && form.value.id == null) {
+      error.value = 'Evaluation ID is missing.'
+      return false
     }
 
-    const createEvaluation = async() => {
-        if(!form.value)return
-        const res = await api.post("/evaluations/create-evaluation", form.value)
-        console.log(res)
-        await fetchEvaluation()
+    saving.value = true
+    try {
+      const { id, title, start_date, end_date } = form.value
+      if (mode === 'edit') {
+        await api.put(`/evaluations/edit-evaluation/${id}`, { title, start_date, end_date })
+      } else {
+        await api.post('/evaluations/create-evaluation', { title, start_date, end_date })
+      }
+      await loadEvaluations()
+      return true
+    } catch (e: any) {
+      error.value = e?.data?.message || e?.message || 'Unable to save evaluation.'
+      return false
+    } finally {
+      saving.value = false
     }
-    
-    const updateEvaluation = async() => {
-        await api.put(`/evaluations/update-evaluation/${form.value.id}`, form.value)
-        await fetchEvaluation()
-    }
-    
-    const deleteEvaluation = async() => {
-        await api.delete(`/evaluations/delete-evaluation/${form.value.id}`)
-        await fetchEvaluation()
-    }
+  }
 
-    return {
-        fetchEvaluation,
-        createEvaluation,
-        updateEvaluation,
-        deleteEvaluation,
-        form,
-        evaluations
-    }
+  return { evaluations, form, loading, saving, error, loadEvaluations, saveEvaluation }
 }
