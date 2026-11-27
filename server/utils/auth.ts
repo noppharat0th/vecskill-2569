@@ -9,7 +9,10 @@ export function reqAuth(e: H3Event): AuthPayload {
   if (!token) throwError(401, 'plase login!')
 
   try {
-    return jwt.verify(token, process.env.JWT_SECRET!) as AuthPayload
+     const user = jwt.verify(token, process.env.JWT_SECRET!) as AuthPayload
+
+     console.log(user)
+     return user
   } catch {
     throwError(401, 'Token Invalid!')
   }

@@ -10,11 +10,11 @@ http:
     type: json
     data: |2-
           {
-            "fname": "aasddd",
-            "lname": "asdass",
-            "username": "aaa",
-            "password": "ddd",
-            "role": "evaluatee"
+            "fname": "e",
+            "lname": "e",
+            "username": "evaluator2",
+            "password": "1234",
+            "role": "evaluator"
         
           }
   auth: inherit

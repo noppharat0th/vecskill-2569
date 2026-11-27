@@ -9,9 +9,20 @@ http:
   body:
     type: json
     data: |
+      // {
+      //   "username": "evaluator2",
+      //   "password": "1234"
+      // }
+
+      // {
+      //   "username": "evaluator",
+      //   "password": "1234"
+      // }
+
+
       {
-        "username": "aaa",
-        "password": "ddd"
+        "username": "admin",
+        "password": "1234"
       }
   auth: inherit
 
