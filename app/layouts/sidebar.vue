@@ -61,7 +61,7 @@ const sections = [
               :to="item.to"
               :title="expanded ? undefined : item.label"
               active-class="!bg-gray-100 !font-medium !text-gray-950"
-              class="flex h-10 items-center gap-3 rounded-lg px-2.5 text-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900"
+              class="flex h-8 items-center gap-3 rounded-lg px-2.5 text-[12px] text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900"
             >
               <UIcon :name="item.icon" class="size-[18px] shrink-0" />
               <span v-if="expanded" class="truncate">{{ item.label }}</span>

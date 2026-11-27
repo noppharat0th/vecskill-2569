@@ -12,7 +12,7 @@ export function useUserService() {
     username: '',
     password: '',
     confirm_password: '',
-    role: '' as User['role'] | '',
+    role: 'evaluatee' as User['role'],
   })
 
   const fetchUser = async () => {
@@ -27,20 +27,30 @@ export function useUserService() {
     await fetchUser()
   }
 
+  const deleteUser = async (id:number) => {
+    if(confirm("delete")){
+      await api.delete(`/users/delete-user/${id}`)
+      await fetchUser()
+    }
+  }
+
   const createUser = async () => {
     error.value = ''
+
     if (form.value.password !== form.value.confirm_password) {
       error.value = 'รหัสผ่านไม่ตรงกัน'
-      return
+      return false
     }
 
-    await api.post('/users/create-user', form.value)
+    const { fname, lname, username, password, role } = form.value
+    await api.post('/users/create-user', { fname, lname, username, password, role })
     await fetchUser()
+    return true
   }
 
   const resetPassword = async () => {
     await api.put('/auth/reset-password')
   }
 
-  return { error, form, users, fetchUser, updateUser, createUser, resetPassword }
+  return { error, form, users, fetchUser, updateUser, createUser, resetPassword, deleteUser }
 }
